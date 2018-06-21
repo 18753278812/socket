@@ -28,6 +28,14 @@ export default {
         msg.message
       }`;
     });
+    this.socket.emit("join", {
+      name: this.name
+    })
+    this.socket.on("join", msg => {
+      document.querySelector(".chat2").innerHTML += `<br />${msg.name}${
+        msg.message
+      }`;
+    })
   },
   methods: {
     send() {
@@ -35,9 +43,6 @@ export default {
         name: this.name,
         message: this.message
       });
-      document.querySelector(".chat2").innerHTML += `<br />${this.name}:${
-        this.message
-      }`;
       this.message = ''
     }
   }

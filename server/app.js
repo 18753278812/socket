@@ -9,13 +9,27 @@ app.get('/', function (req, res) {
 });
 
 io.on('connection', function (socket) {
-
+  // 加入聊天室
+  socket.on('join', data => {
+    socket.broadcast.emit('join', { // broadcast给所有人发送消息
+      name: data.name,
+      message: '加入聊天室'
+    })
+  })
   // 聊天功能
   socket.on('getMessage', data => {
     socket.broadcast.emit('setMessage', { // broadcast给所有人发送消息
       name: data.name,
       message: data.message
     })
+  })
+
+  socket.on('disconn', data => {
+    socket.broadcast.emit('join', { // broadcast给所有人发送消息
+      name: data.name,
+      message: '退出聊天室'
+    })
+    socket.disconnect(true)
   })
 });
 
