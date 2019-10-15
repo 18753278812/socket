@@ -1,19 +1,19 @@
 <template>
   <div id="app">
     <chat1 />
-    <chat2 />
+    <!-- <chat2 /> -->
   </div>
 </template>
 
 <script>
 import io from "socket.io-client";
 import chat1 from "./chat/chat1.vue";
-import chat2 from "./chat/chat2.vue";
+// import chat2 from "./chat/chat2.vue";
 export default {
   name: "app",
   components: {
     chat1,
-    chat2
+    // chat2
   }
 };
 </script>

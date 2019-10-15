@@ -11,6 +11,10 @@ app.get('/', function (req, res) {
 io.on('connection', function (socket) {
   // 加入聊天室
   socket.on('join', data => {
+    socket.emit('join', { // broadcast给所有人发送消息
+      name: data.name,
+      message: '加入聊天室'
+    })
     socket.broadcast.emit('join', { // broadcast给所有人发送消息
       name: data.name,
       message: '加入聊天室'
@@ -18,6 +22,10 @@ io.on('connection', function (socket) {
   })
   // 聊天功能
   socket.on('getMessage', data => {
+    socket.emit('setMessage', { // broadcast给自己发送消息
+      name: data.name,
+      message: data.message
+    })
     socket.broadcast.emit('setMessage', { // broadcast给所有人发送消息
       name: data.name,
       message: data.message
@@ -25,6 +33,10 @@ io.on('connection', function (socket) {
   })
 
   socket.on('disconn', data => {
+    socket.emit('join', { // broadcast给所有人发送消息
+      name: data.name,
+      message: '退出聊天室'
+    })
     socket.broadcast.emit('join', { // broadcast给所有人发送消息
       name: data.name,
       message: '退出聊天室'
